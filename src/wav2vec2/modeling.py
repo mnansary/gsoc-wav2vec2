@@ -228,7 +228,7 @@ class Wav2Vec2ForCTC(TFKerasModel):
 
         self.model = Wav2Vec2Model(config, input_shape=None, name="wav2vec2")
         self.dropout = tf.keras.layers.Dropout(config.dropout)
-        #self.lm_head = tf.keras.layers.Dense(config.vocab_size, name="lm_head")
+        self.lm_head = tf.keras.layers.Dense(config.vocab_size, name="lm_head")
 
         self._init(input_shape=input_shape, is_robust=config.is_robust)
 
@@ -251,5 +251,5 @@ class Wav2Vec2ForCTC(TFKerasModel):
         """
         batch = self.model(batch, attention_mask=attention_mask, training=training)
         batch = self.dropout(batch, training=training)
-        #batch = self.lm_head(batch)
+        batch = self.lm_head(batch)
         return batch
