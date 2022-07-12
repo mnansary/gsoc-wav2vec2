@@ -66,7 +66,7 @@ class Wav2Vec2(tf.keras.layers.Layer):
             trainable=True,
         )
 
-    def call(self, batch, attention_mask= None, training=False):
+    def call(self, batch, attention_mask= None, training=False,batch_size=None):
         """
         Args:
             batch (:obj: `tf.Tensor`) of shape (batch_size, seqlen):
@@ -89,6 +89,7 @@ class Wav2Vec2(tf.keras.layers.Layer):
         if training and self.apply_spec_augment:
             batch = apply_spec_augmentation(
                 batch,
+                batch_size,
                 self.masked_spec_augment,
                 self.mask_time_prob,
                 self.mask_time_length,

@@ -90,7 +90,7 @@ def _compute_mask_indices(shape, mask_prob, mask_length, min_masks=2):
     return mask_indices
 
 
-def apply_spec_augmentation(features, masked_spec_augment, mask_prob, mask_length):
+def apply_spec_augmentation(features,batch_size, masked_spec_augment, mask_prob, mask_length):
     """
     This method apply spec-augmentation to the `hidden_states`
 
@@ -107,11 +107,11 @@ def apply_spec_augmentation(features, masked_spec_augment, mask_prob, mask_lengt
         features (:obj: `tf.Tensor`) of shape (batch_size, seqlen, hidden_size):
             hidden states masked at certain positions which are chosen randomly.
     """
-
+    bs,seqlen=features.shape[:2]
     # first find the indices to mask from the sequence
     # choose mask such that we conserve the mask_length
     mask_indices = _compute_mask_indices(
-        features.shape[:2], mask_prob, mask_length, min_masks=2
+        (batch_size,seqlen), mask_prob, mask_length, min_masks=2
     )
 
     # since we are going to `tf.where(...)`, we need True at positions where we want to mask
