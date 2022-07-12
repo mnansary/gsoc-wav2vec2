@@ -1,6 +1,5 @@
 """TensorFlow implementation of Wav2Vec2"""
 
-from distutils.command.build import build
 import tensorflow as tf
 
 from .encoder import Wav2Vec2Encoder
